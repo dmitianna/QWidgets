@@ -5,6 +5,7 @@ void Figura::move(float Alpha,QPainter *Painter)
 {
     dx=halflen*cos(Alpha);
     dy=halflen*sin(Alpha);
+    // После вычисления новых координат
     draw(Painter);
 }
 void MyLine::draw(QPainter *Painter)

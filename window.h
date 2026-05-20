@@ -7,10 +7,9 @@ class Window : public QWidget
 {
     Q_OBJECT
 protected:
-    QTextCodec *codec;
     Area * area; // область отображения рисунка
     QPushButton * btn;
 public:
-    Window(QWidget *parent = nullptr);
+    Window();
 };
 #endif // WINDOW_H

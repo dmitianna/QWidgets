@@ -5,11 +5,12 @@ class Figura
 {
 protected:
     int x,y,halflen,dx,dy,r;
-    virtual void draw(QPainter *Painter)=0;
+    virtual void draw(QPainter *Painter)=0; // Каждая фигура должна самостоятельно реализовать отрисовку.
 public:
     Figura(int X,int Y,int Halflen): x(X),y(Y),halflen(Halflen){}
     virtual ~Figura() = default;
-    void move(float Alpha,QPainter *Painter);
+    void move(float Alpha,QPainter *Painter); // Метод move вычисляет новые координаты фигуры
+    // после поворота на угол Alpha.
 };
 
 class MyLine:public Figura
