@@ -15,7 +15,6 @@ public:
     ~Window () = default;
 
 protected:
-    QTextCodec *codec;
     QLabel *label1,*label2;
     Counter *edit1,*edit2;
     QPushButton *calcbutton;
