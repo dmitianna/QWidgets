@@ -13,6 +13,7 @@ SOURCES += \
     window.cpp
 
 HEADERS += \
+    counter.h \
     window.h
 
 # Default rules for deployment.

@@ -2,13 +2,23 @@
 #define WINDOW_H
 
 #include <QWidget>
+#include <QLabel>
+#include <QPushButton>
+#include "counter.h"
 
-class Widget : public QWidget
+class Window : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
+    Window(QWidget *parent = nullptr);
+    ~Window () = default;
+
+protected:
+    QTextCodec *codec;
+    QLabel *label1,*label2;
+    Counter *edit1,*edit2;
+    QPushButton *calcbutton;
+    QPushButton *exitbutton;
 };
 #endif // WINDOW_H
