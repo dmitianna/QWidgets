@@ -33,7 +33,7 @@ class StrValidator:public QValidator // класс компонента пров
 {
 public:
     StrValidator(QObject *parent = nullptr):QValidator(parent){}
-    State validate(QString &str,int &pos)const override
+    virtual State validate(QString &str,int &pos)const
     {
         return QValidator::Acceptable; // метод всегда принимает вводимую строку
     }
