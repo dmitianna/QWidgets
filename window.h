@@ -27,6 +27,8 @@ protected:
 public slots:
     void begin(); // метод начальной настройки интерфейса
     void calc(); // метод реализации вычислений
+private:
+    float m_maxAbsInputValue = 0;
 };
 
 class StrValidator:public QValidator // класс компонента проверки ввода

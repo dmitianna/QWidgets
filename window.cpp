@@ -6,24 +6,68 @@ Window::Window(QWidget *parent):QWidget(parent)
     setWindowTitle("Возведение в квадрат");// Установка заголовка окна
 
     frame = new QFrame(this); // Создание рамки для группировки элементов интерфейса
+    if (!frame)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать QFrame.");
+        return;
+    }
     frame->setFrameShadow(QFrame::Raised);
     frame->setFrameShape(QFrame::Panel);
 
     inputLabel = new QLabel("Введите число:",this);// Создание текстовой метки для поля ввода
-
+    if (!inputLabel)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать метку ввода.");
+        return;
+    }
     inputEdit = new QLineEdit(this); // Создание поля ввода числа
+    if (!inputEdit)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать поле ввода.");
+        return;
+    }
     // Установка валидатора
-    inputEdit->setValidator(new QDoubleValidator(this)); // разрешается ввод только вещественных чисел
-
+    QDoubleValidator *validator = new QDoubleValidator(this);
+    if (!validator)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать валидатор.");
+        return;
+    }
+    inputEdit->setValidator(validator);
     outputLabel = new QLabel("Результат:",this);// Создание метки результата
+    if (!outputLabel)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать метку ввода.");
+        return;
+    }
     outputEdit = new QLineEdit(this); // Создание поля вывода результата
+    if (!outputEdit)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать поле результата.");
+        return;
+    }
     // Поле только для чтения
     outputEdit->setReadOnly(true); // пользователь не может изменить результат вручную
 
     nextButton = new QPushButton("Следующее",this);// Создание кнопки перехода к следующему вычислению
+    if (!nextButton)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать кнопку Следующее.");
+        return;
+    }
     exitButton = new QPushButton("Выход",this);// Создание кнопки выхода из программы
+    if (!exitButton)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать кнопку Выход.");
+        return;
+    }
     // компоновка приложения выполняется согласно рисунку 2
     QVBoxLayout *vLayout1 = new QVBoxLayout(frame); // Вертикальный layout внутри рамки
+    if (!vLayout1)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать компоновщик vLayout1.");
+        return;
+    }
     // содержит поля ввода и вывода
     vLayout1->addWidget(inputLabel);
     vLayout1->addWidget(inputEdit);
@@ -33,21 +77,28 @@ Window::Window(QWidget *parent):QWidget(parent)
     // прижимает элементы к верхней части окна
     // Вертикальный layout для кнопок
     QVBoxLayout *vLayout2 = new QVBoxLayout();
+    if (!vLayout2)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать компоновщик vLayout2.");
+        return;
+    }
     // Добавление кнопок
     vLayout2->addWidget(nextButton);
     vLayout2->addWidget(exitButton);
     vLayout2->addStretch();
     // Главный горизонтальный layout окна
     QHBoxLayout *hLayout = new QHBoxLayout(this);
+    if (!hLayout)
+    {
+        QMessageBox::critical(this,"Ошибка","Не удалось создать главный компоновщик.");
+        return;
+    }
     hLayout->addWidget(frame);// Добавление рамки с полями
     hLayout->addLayout(vLayout2); // Добавление layout с кнопками
     begin(); // Выполнение начальной настройки интерфейса
-    connect(exitButton,&QPushButton::clicked,
-            this,&QWidget::close);
-    connect(nextButton,&QPushButton::clicked,
-            this,&Window::begin);
-    connect(inputEdit,&QLineEdit::returnPressed,
-            this,&Window::calc);
+    connect(exitButton,&QPushButton::clicked,this,&QWidget::close);
+    connect(nextButton,&QPushButton::clicked,this,&Window::begin);
+    connect(inputEdit,&QLineEdit::returnPressed,this,&Window::calc);
 }
 
 void Window::begin()
@@ -70,10 +121,15 @@ void Window::calc()
     double a=str.toDouble(&Ok);
     if (Ok)
     {
+        if(abs(a) > m_maxAbsInputValue) {
+            QMessageBox msgBox(QMessageBox::Information,"Возведение в квадрат",
+                               "Введено слишком большое число",QMessageBox::Ok);
+            msgBox.exec();
+            return;
+        }
         r=a*a;
         str.setNum(r);
         outputEdit->setText(str); // Вывод результата в поле outputEdit
-
         inputEdit->setEnabled(false);// Блокировка повторного ввода
         // Отображение элементов результата
         outputLabel->setVisible(true);
@@ -87,10 +143,8 @@ void Window::calc()
     {
         if (!str.isEmpty())
         {
-            QMessageBox msgBox(QMessageBox::Information,
-                               "Возведение в квадрат.",
-                               "Введено неверное значение.",
-                               QMessageBox::Ok);
+            QMessageBox msgBox(QMessageBox::Information,"Возведение в квадрат.",
+                               "Введено неверное значение.",QMessageBox::Ok);
             msgBox.exec();
         }
     }
