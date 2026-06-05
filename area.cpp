@@ -1,5 +1,7 @@
 #include "area.h"
 #include <QTimerEvent>
+#include <QMessageBox>
+#include <QApplication>
 Area::Area(QWidget *parent):QWidget(parent)
 {
     setFixedSize(QSize(300,200)); // Установка фиксированного размера области рисования.
@@ -8,7 +10,19 @@ Area::Area(QWidget *parent):QWidget(parent)
     // X, Y — координаты центра,
     // Halflen — половина длины фигуры.
     myline=new MyLine(80,100,50);
+    if (!myline)
+    {
+        QMessageBox::critical(this,"Ошибка","MyLine - ошибка создания.");
+        qApp->quit();
+        return;
+    }
     myrect=new MyRect(220,100,50);
+    if (!myrect)
+    {
+        QMessageBox::critical(this,"Ошибка","MyRect - ошибка создания.");
+        qApp->quit();
+        return;
+    }
     alpha=0;
 }
 void Area::showEvent(QShowEvent *)

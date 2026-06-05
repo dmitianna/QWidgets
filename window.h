@@ -7,8 +7,8 @@ class Window : public QWidget
 {
     Q_OBJECT
 protected:
-    Area * area; // область отображения рисунка
-    QPushButton * btn;
+    Area* area = nullptr;; // область отображения рисунка
+    QPushButton* btn = nullptr;;
 public:
     Window();
 };

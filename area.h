@@ -9,8 +9,8 @@ class Area : public QWidget
 public:
     Area(QWidget *parent = 0);
     ~Area();
-    MyLine *myline;
-    MyRect *myrect;
+    MyLine *myline = nullptr;
+    MyRect *myrect = nullptr;
 protected:
     //обработчики событий
     void paintEvent(QPaintEvent *event);
