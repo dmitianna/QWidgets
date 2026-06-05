@@ -1,8 +1,11 @@
 #include "window.h"
+#include <float.h>
+#include <math.h>
 #include <QVBoxLayout>
 #include <QMessageBox>
 Window::Window(QWidget *parent):QWidget(parent)
 {
+    m_maxAbsInputValue = sqrt(FLT_MAX);
     setWindowTitle("Возведение в квадрат");// Установка заголовка окна
 
     frame = new QFrame(this); // Создание рамки для группировки элементов интерфейса
